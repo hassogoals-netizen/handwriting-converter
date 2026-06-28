@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Handwriting Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; }
+        .control-panel { flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .preview-panel { flex: 1.2; min-width: 350px; display: flex; flex-direction: column; align-items: center; }
+        
+        h2 { margin-top: 0; color: #4a4a4a; font-size: 22px; }
+        textarea { width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; resize: vertical; box-sizing: border-box; }
+        
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .option-group { display: flex; flex-direction: column; }
+        label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #666; }
+        select, input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        
+        /* Same to Same Notebook Paper Effect */
+        #paper {
+            width: 100%;
+            max-width: 500px;
+            min-height: 600px;
+            background: #fff;
+            background-image: linear-gradient(#e7e7e7 1px, transparent 1px);
+            background-size: 100% 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 32px 20px 20px 45px; /* Margin line space */
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Red vertical margin line like real notebook */
+        #paper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 35px;
+            width: 1px; height: 100%;
+            background-color: #ff8080;
+        }
+        
+        #output-text {
+            width: 100%;
+            height: 100%;
+            font-family: 'Caveat', cursive;
+            font-size: 22px;
+            line-height: 24px; /* Matches the background line size */
+            color: #0033aa; /* Royal Blue Ink */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            outline: none;
+        }
+        
+        .btn-download {
+            width: 100%; margin-top: 20px; padding: 12px;
+            background-color: #007bff; color: white; border: none;
+            border-radius: 8px; font-size: 16px; font-weight: bold;
+            cursor: pointer; transition: background 0.2s;
+        }
+        .btn-download:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="control-panel">
+        <h2>Handwriting Converter</h2>
+        <label>Apna Text Yahan Paste Karen:</label>
+        <textarea id="input-text" placeholder="Yahan kuch bhi likhain ya assignments ka text paste karen...">Dear Teacher, Please accept this digital handwriting assignment...</textarea>
+        
+        <div class="options">
+            <div class="option-group">
+                <label>Font Style</label>
+                <select id="font-select">
+                    <option value="'Caveat', cursive">Style 1 (Caveat)</option>
+                    <option value="'Dancing Script', cursive">Style 2 (Elegant)</option>
+                    <option value="'Shadows Into Light', cursive">Style 3 (Clean)</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>Ink Color</label>
+                <select id="color-select">
+                    <option value="#0033aa">Blue Ink</option>
+                    <option value="#111111">Black Ink</option>
+                    <option value="#cc0000">Red Ink</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>Font Size (px)</label>
+                <input type="number" id="size-input" value="22" min="16" max="35">
+            </div>
+            <div class="option-group">
+                <label>Line Spacing (px)</label>
+                <input type="number" id="spacing-input" value="24" min="20" max="40">
+            </div>
+        </div>
+        
+        <button class="btn-download" onclick="downloadHandwriting()">Download Page as Image</button>
+    </div>
+    
+    <div class="preview-panel">
+        <div id="paper">
+            <div id="output-text">Dear Teacher, Please accept this digital handwriting assignment...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('input-text');
+    const output = document.getElementById('output-text');
+    const paper = document.getElementById('paper');
+    const fontSelect = document.getElementById('font-select');
+    const colorSelect = document.getElementById('color-select');
+    const sizeInput = document.getElementById('size-input');
+    const spacingInput = document.getElementById('spacing-input');
+
+    // Sync Text
+    input.addEventListener('input', () => { output.innerText = input.value; });
+
+    // Sync Font Options
+    fontSelect.addEventListener('change', () => { output.style.fontFamily = fontSelect.value; });
+    colorSelect.addEventListener('change', () => { output.style.color = colorSelect.value; });
+    
+    sizeInput.addEventListener('input', () => { output.style.fontSize = sizeInput.value + 'px'; });
+    
+    spacingInput.addEventListener('input', () => { 
+        output.style.lineHeight = spacingInput.value + 'px'; 
+        paper.style.backgroundSize = '100% ' + spacingInput.value + 'px';
+    });
+
+    // Download Function
+    function downloadHandwriting() {
+        const paperElement = document.getElementById('paper');
+        html2canvas(paperElement, { scale: 2 }).then(canvas => {
+            let link = document.createElement('a');
+            link.download = 'handwriting_assignment.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+</script>
+
+</body>
+</html>
