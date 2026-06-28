@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text to Handwriting Converter - Free Assignment Maker</title>
+    <title>Text to Handwriting Converter - Online Assignment Maker</title>
     
-    <!-- SEO Meta Tags for Google Search -->
-    <meta name="description" content="Convert your computer text or assignments into realistic human handwriting. Free, easy to use, and downloadable as images.">
-    <meta name="keywords" content="text to handwriting, online assignment maker, handwriting converter, convert text to assignment">
+    <meta name="description" content="Convert your computer text or essays into realistic human handwriting instantly. Free online assignment maker downloadable as high-quality images.">
+    <meta name="keywords" content="text to handwriting, online assignment maker, handwriting converter, convert text to handwriting, handwriting generator">
 
-    <!-- 7 Google Fonts for Real Handwriting Styles -->
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/fountain-pen.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@500&family=Shadows+Into+Light&family=Architects+Daughter&family=Indie+Flower&family=Patrick+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
     
-    <!-- html2canvas library for downloading image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
@@ -29,7 +28,7 @@
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #666; }
         select, input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
         
-        /* Notebook Paper Effect */
+        /* Premium Notebook Paper Effect */
         #paper {
             width: 100%;
             max-width: 500px;
@@ -77,11 +76,10 @@
 <body>
 
 <div class="container">
-    <!-- Controls Area -->
     <div class="control-panel">
         <h2>Handwriting Converter</h2>
-        <label>Apna Text Yahan Paste Karen:</label>
-        <textarea id="input-text" placeholder="Yahan apna text paste karen..."></textarea>
+        <label>Paste Your Text Here:</label>
+        <textarea id="input-text" placeholder="Type or paste your text here to convert into handwriting..."></textarea>
         
         <div class="options">
             <div class="option-group">
@@ -92,7 +90,7 @@
                     <option value="'Shadows Into Light', cursive">Style 3 (Neat & Clean)</option>
                     <option value="'Architects Daughter', cursive">Style 4 (Block Letters)</option>
                     <option value="'Indie Flower', cursive">Style 5 (Cute & Round)</option>
-                    <option value="'Patrick Hand', cursive">Style 6 (Boyish Print)</option>
+                    <option value="'Patrick Hand', cursive">Style 6 (Regular Print)</option>
                     <option value="'Permanent Marker', cursive">Style 7 (Bold Marker)</option>
                 </select>
             </div>
@@ -117,7 +115,6 @@
         <button class="btn-download" onclick="downloadHandwriting()">Download Page as Image</button>
     </div>
     
-    <!-- Paper Preview Area -->
     <div class="preview-panel">
         <div id="paper">
             <div id="output-text"></div>
