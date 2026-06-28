@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text to Handwriting Converter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <title>Text to Handwriting Converter - Free Assignment Maker</title>
+    
+    <!-- SEO Meta Tags for Google Search -->
+    <meta name="description" content="Convert your computer text or assignments into realistic human handwriting. Free, easy to use, and downloadable as images.">
+    <meta name="keywords" content="text to handwriting, online assignment maker, handwriting converter, convert text to assignment">
+
+    <!-- 7 Google Fonts for Real Handwriting Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@500&family=Shadows+Into+Light&family=Architects+Daughter&family=Indie+Flower&family=Patrick+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <!-- html2canvas library for downloading image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
@@ -21,7 +29,7 @@
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #666; }
         select, input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
         
-        /* Same to Same Notebook Paper Effect */
+        /* Notebook Paper Effect */
         #paper {
             width: 100%;
             max-width: 500px;
@@ -31,12 +39,12 @@
             background-size: 100% 24px;
             border-radius: 4px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 32px 20px 20px 45px; /* Margin line space */
+            padding: 32px 20px 20px 45px;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
         }
-        /* Red vertical margin line like real notebook */
+        /* Red vertical margin line */
         #paper::before {
             content: '';
             position: absolute;
@@ -50,8 +58,8 @@
             height: 100%;
             font-family: 'Caveat', cursive;
             font-size: 22px;
-            line-height: 24px; /* Matches the background line size */
-            color: #0033aa; /* Royal Blue Ink */
+            line-height: 24px;
+            color: #0033aa;
             white-space: pre-wrap;
             word-wrap: break-word;
             outline: none;
@@ -69,18 +77,23 @@
 <body>
 
 <div class="container">
+    <!-- Controls Area -->
     <div class="control-panel">
         <h2>Handwriting Converter</h2>
         <label>Apna Text Yahan Paste Karen:</label>
-        <textarea id="input-text" placeholder="Yahan kuch bhi likhain ya assignments ka text paste karen...">Dear Teacher, Please accept this digital handwriting assignment...</textarea>
+        <textarea id="input-text" placeholder="Yahan apna text paste karen..."></textarea>
         
         <div class="options">
             <div class="option-group">
                 <label>Font Style</label>
                 <select id="font-select">
-                    <option value="'Caveat', cursive">Style 1 (Caveat)</option>
-                    <option value="'Dancing Script', cursive">Style 2 (Elegant)</option>
-                    <option value="'Shadows Into Light', cursive">Style 3 (Clean)</option>
+                    <option value="'Caveat', cursive">Style 1 (Natural Cursive)</option>
+                    <option value="'Dancing Script', cursive">Style 2 (Elegant Script)</option>
+                    <option value="'Shadows Into Light', cursive">Style 3 (Neat & Clean)</option>
+                    <option value="'Architects Daughter', cursive">Style 4 (Block Letters)</option>
+                    <option value="'Indie Flower', cursive">Style 5 (Cute & Round)</option>
+                    <option value="'Patrick Hand', cursive">Style 6 (Boyish Print)</option>
+                    <option value="'Permanent Marker', cursive">Style 7 (Bold Marker)</option>
                 </select>
             </div>
             <div class="option-group">
@@ -104,9 +117,10 @@
         <button class="btn-download" onclick="downloadHandwriting()">Download Page as Image</button>
     </div>
     
+    <!-- Paper Preview Area -->
     <div class="preview-panel">
         <div id="paper">
-            <div id="output-text">Dear Teacher, Please accept this digital handwriting assignment...</div>
+            <div id="output-text"></div>
         </div>
     </div>
 </div>
@@ -120,13 +134,14 @@
     const sizeInput = document.getElementById('size-input');
     const spacingInput = document.getElementById('spacing-input');
 
-    // Sync Text
-    input.addEventListener('input', () => { output.innerText = input.value; });
+    // Sync Text Live
+    input.addEventListener('input', () => { 
+        output.innerText = input.value; 
+    });
 
     // Sync Font Options
     fontSelect.addEventListener('change', () => { output.style.fontFamily = fontSelect.value; });
     colorSelect.addEventListener('change', () => { output.style.color = colorSelect.value; });
-    
     sizeInput.addEventListener('input', () => { output.style.fontSize = sizeInput.value + 'px'; });
     
     spacingInput.addEventListener('input', () => { 
