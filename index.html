@@ -5,40 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text to Handwriting Converter - Online Assignment Maker</title>
     
+    <!-- SEO Meta Tags for Google Search -->
     <meta name="description" content="Convert your computer text or essays into realistic human handwriting instantly. Free online assignment maker downloadable as high-quality images.">
     <meta name="keywords" content="text to handwriting, online assignment maker, handwriting converter, convert text to handwriting, handwriting generator">
 
+    <!-- Chrome Tab Pic (Favicon) -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/fountain-pen.png">
 
+    <!-- Premium Handwriting Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@500&family=Shadows+Into+Light&family=Architects+Daughter&family=Indie+Flower&family=Patrick+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
     
+    <!-- html2canvas library for downloading image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; }
-        .control-panel { flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fafafa; margin: 0; padding: 0; color: #333; }
+        
+        /* White Navbar with Yellow Accents */
+        .navbar { background-color: #ffffff; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #ffcc00; }
+        .navbar-brand { display: flex; align-items: center; color: #222; font-size: 22px; font-weight: bold; text-decoration: none; }
+        .navbar-brand img { width: 30px; margin-right: 10px; }
+        .navbar-brand span { color: #ffcc00; }
+        .navbar-menu { display: flex; gap: 20px; }
+        .navbar-menu a { color: #555; text-decoration: none; font-size: 15px; font-weight: 600; transition: color 0.2s; }
+        .navbar-menu a:hover { color: #ffcc00; }
+
+        /* Clean White & Yellow Hero Banner */
+        .hero-banner { background-color: #fffde6; padding: 50px 20px; text-align: center; color: #222; border-bottom: 1px solid #ffe680; margin-bottom: 30px; }
+        .hero-banner h1 { margin: 0; font-size: 42px; font-weight: 800; letter-spacing: 1px; color: #222; }
+        .hero-banner h1 span { background: linear-gradient(120deg, #ffcc00 0%, #ffea00 100%); padding: 0 10px; border-radius: 4px; }
+        .hero-banner p { margin: 15px 0 0 0; font-size: 16px; color: #555; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+        /* Main Workspace Container */
+        .container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 30px; padding: 0 20px 40px 20px; }
+        .control-panel { flex: 1; min-width: 320px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #eee; height: fit-content; }
         .preview-panel { flex: 1.2; min-width: 350px; display: flex; flex-direction: column; align-items: center; }
         
-        h2 { margin-top: 0; color: #4a4a4a; font-size: 22px; }
-        textarea { width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; resize: vertical; box-sizing: border-box; }
+        .section-title { font-size: 14px; font-weight: bold; text-transform: uppercase; color: #666; margin-bottom: 8px; letter-spacing: 0.5px; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 15px; }
+        .section-title:first-child { margin-top: 0; }
+        textarea { width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; resize: vertical; box-sizing: border-box; margin-bottom: 10px; font-family: inherit; }
         
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        /* Options Grid */
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
         .option-group { display: flex; flex-direction: column; }
-        label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #666; }
-        select, input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #555; }
+        select, input[type="number"] { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background-color: #fff; box-sizing: border-box; }
         
-        /* Premium Notebook Paper Effect */
+        /* Alignment Buttons styled for Theme */
+        .align-buttons { display: flex; gap: 5px; margin-bottom: 15px; }
+        .align-btn { flex: 1; padding: 8px; background: #fafafa; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
+        .align-btn.active, .align-btn:hover { background: #ffcc00; color: #222; border-color: #ffcc00; }
+
+        /* Blank Page Toggle Styling */
+        .toggle-container { display: flex; align-items: center; gap: 10px; padding: 10px; background: #fffde6; border: 1px solid #ffe680; border-radius: 6px; grid-column: span 2; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; margin: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #ffcc00; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .toggle-label { font-size: 13px; font-weight: 600; color: #222; }
+
+        /* Notebook Paper Effect (A4 Proportions) */
+        .paper-shadow { background: transparent; padding: 10px; border-radius: 4px; width: 100%; max-width: 500px; box-sizing: border-box; }
         #paper {
             width: 100%;
-            max-width: 500px;
-            min-height: 600px;
+            aspect-ratio: 1 / 1.414; /* Perfect A4 Ratio */
             background: #fff;
             background-image: linear-gradient(#e7e7e7 1px, transparent 1px);
             background-size: 100% 24px;
-            border-radius: 4px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 32px 20px 20px 45px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
+            padding: 40px 25px 40px 50px;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
@@ -47,7 +85,7 @@
         #paper::before {
             content: '';
             position: absolute;
-            top: 0; left: 35px;
+            top: 0; left: 40px;
             width: 1px; height: 100%;
             background-color: #ff8080;
         }
@@ -62,28 +100,71 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             outline: none;
+            text-align: left;
         }
         
+        /* Yellow Premium Download Button */
         .btn-download {
-            width: 100%; margin-top: 20px; padding: 12px;
-            background-color: #007bff; color: white; border: none;
+            width: 100%; margin-top: 25px; padding: 14px;
+            background-color: #ffcc00; color: #222; border: none;
             border-radius: 8px; font-size: 16px; font-weight: bold;
             cursor: pointer; transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.2);
         }
-        .btn-download:hover { background-color: #0056b3; }
+        .btn-download:hover { background-color: #e6b800; }
+
+        /* SEO Content Section Box (Matching Theme) */
+        .seo-section { max-width: 900px; margin: 40px auto; background-color: #ffffff; color: #333; padding: 40px; border-radius: 16px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); border: 1px solid #eee; border-top: 4px solid #ffcc00; }
+        .seo-section h2 { color: #222; font-size: 28px; margin-top: 0; margin-bottom: 15px; }
+        .seo-section h3 { color: #444; font-size: 22px; margin-top: 25px; margin-bottom: 10px; }
+        .seo-section p { line-height: 1.7; color: #555; font-size: 15px; margin-bottom: 15px; text-align: justify; }
+
+        /* White & Yellow Footer Section */
+        .footer { background-color: #ffffff; padding: 30px 20px; text-align: center; color: #555; border-top: 1px solid #eee; font-size: 14px; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
+        .footer-links a { color: #555; text-decoration: none; font-weight: 600; transition: color 0.2s; }
+        .footer-links a:hover { color: #ffcc00; }
     </style>
 </head>
 <body>
 
+<!-- Top Navbar -->
+<nav class="navbar">
+    <a href="#" class="navbar-brand">
+        <img src="https://img.icons8.com/fluency/48/fountain-pen.png" alt="Logo">
+        TextToHandwriting<span>.com</span>
+    </a>
+    <div class="navbar-menu">
+        <a href="#">HOME</a>
+        <a href="#">TOOLS</a>
+        <a href="#">BLOG</a>
+    </div>
+</nav>
+
+<!-- Hero Banner Section -->
+<div class="hero-banner">
+    <h1>Text To <span>Handwriting</span></h1>
+    <p>A free artificial intelligence-based human handwriting converter that easily converts your computer text to realistic human handwriting text.</p>
+</div>
+
+<!-- Main Section -->
 <div class="container">
     <div class="control-panel">
-        <h2>Handwriting Converter</h2>
-        <label>Paste Your Text Here:</label>
+        <div class="section-title">Input Text</div>
         <textarea id="input-text" placeholder="Type or paste your text here to convert into handwriting..."></textarea>
         
+        <div class="section-title">Text Alignment</div>
+        <div class="align-buttons">
+            <button class="align-btn active" onclick="changeAlign('left', this)">Left</button>
+            <button class="align-btn" onclick="changeAlign('center', this)">Center</button>
+            <button class="align-btn" onclick="changeAlign('right', this)">Right</button>
+            <button class="align-btn" onclick="changeAlign('justify', this)">Justify</button>
+        </div>
+
+        <div class="section-title">Select Handwriting & Options</div>
         <div class="options">
             <div class="option-group">
-                <label>Font Style</label>
+                <label>Handwriting Style</label>
                 <select id="font-select">
                     <option value="'Caveat', cursive">Style 1 (Natural Cursive)</option>
                     <option value="'Dancing Script', cursive">Style 2 (Elegant Script)</option>
@@ -110,17 +191,59 @@
                 <label>Line Spacing (px)</label>
                 <input type="number" id="spacing-input" value="24" min="20" max="40">
             </div>
+            
+            <!-- Blank Page Toggle Switch -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="blank-page-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Blank Page (No Lines)</span>
+            </div>
         </div>
         
-        <button class="btn-download" onclick="downloadHandwriting()">Download Page as Image</button>
+        <button class="btn-download" onclick="downloadHandwriting()">Generate & Download Image</button>
     </div>
     
     <div class="preview-panel">
-        <div id="paper">
-            <div id="output-text"></div>
+        <div class="paper-shadow">
+            <div id="paper">
+                <div id="output-text"></div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Google SEO Ready Content Section -->
+<div class="seo-section">
+    <h2>Text to Handwriting Converter</h2>
+    <p>The text has always been an essential part of our lives. There was a time when we would use a pen and paper to write most of our content. The only time when you would see typewriter fonts would be in books. People would generally write letters and fill entire notebooks with content.</p>
+    <p>One of the most significant issues with the modern world is the lack of handwritten content. We have traded pens and paper for computer keyboards. It all feels very impersonal, and it seems like it is time to have a way to bring it back. That handwritten content that we all loved reading.</p>
+    <p>There are many ways to write content on the web for all kinds of purposes. Today we are going to be talking about a unique approach called <strong>text to handwriting</strong>. This is a website tool that takes your text and turns it into a document that looks handwritten.</p>
+    <p>Doing this without using this website software would require that you wrote something on a piece of paper. Then you took a camera and made sure that you took a picture that looked good while avoiding any flash or glare.</p>
+
+    <h3>How to use the Text to Handwriting tool</h3>
+    <p>This is something that you can use completely free of charge by visiting the website. Once you are on the page, you can enter text for the heading and text for the content or page line. You can choose between 7 different types of handwriting. You can select the heading handwriting size and the content handwriting size as well. Last but not least, you can choose the color of the pen ink between blue, red, and black.</p>
+    <p>The choice of colors is a nice touch because it also makes it easier for you to personalize the content. This is always good to have because you won't need to do any further altering of the content with an external editor if you want to use another pen color. Black, blue, and red are the most common you will see in most handwritten content. This is why the software has those options.</p>
+
+    <h3>Final thoughts</h3>
+    <p>The use of this <strong>text to handwriting</strong> website tool is going to be fun to use. This is the main reason why you should check it out. It could also turn out to be a great way to create something fresh for your audience. The website is free to use anytime you want, and you can find this to be a great way to generate content. Check it out right now and create a unique approach to your content!</p>
+</div>
+
+<!-- Professional Footer -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Disclaimer</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Website Credit</a>
+        <a href="#">DMCA</a>
+        <a href="#">BLOG</a>
+    </div>
+    <p>© 2020 to 2026 By <strong>Text To Handwriting</strong> All Rights Reserved.</p>
+</footer>
 
 <script>
     const input = document.getElementById('input-text');
@@ -130,28 +253,53 @@
     const colorSelect = document.getElementById('color-select');
     const sizeInput = document.getElementById('size-input');
     const spacingInput = document.getElementById('spacing-input');
+    const blankToggle = document.getElementById('blank-page-toggle');
 
-    // Sync Text Live
+    // Live sync text
     input.addEventListener('input', () => { 
         output.innerText = input.value; 
     });
 
-    // Sync Font Options
+    // Handle styles changes
     fontSelect.addEventListener('change', () => { output.style.fontFamily = fontSelect.value; });
     colorSelect.addEventListener('change', () => { output.style.color = colorSelect.value; });
     sizeInput.addEventListener('input', () => { output.style.fontSize = sizeInput.value + 'px'; });
     
     spacingInput.addEventListener('input', () => { 
-        output.style.lineHeight = spacingInput.value + 'px'; 
-        paper.style.backgroundSize = '100% ' + spacingInput.value + 'px';
+        if(!blankToggle.checked) {
+            output.style.lineHeight = spacingInput.value + 'px'; 
+            paper.style.backgroundSize = '100% ' + spacingInput.value + 'px';
+        }
     });
 
-    // Download Function
+    // Alignment Change Logic
+    function changeAlign(alignValue, button) {
+        output.style.textAlign = alignValue;
+        document.querySelectorAll('.align-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    }
+
+    // Blank Page Toggle Logic
+    blankToggle.addEventListener('change', () => {
+        if(blankToggle.checked) {
+            paper.style.backgroundImage = 'none';
+            const style = document.createElement('style');
+            style.id = 'hide-red-line';
+            style.innerHTML = '#paper::before { display: none !important; }';
+            document.head.appendChild(style);
+        } else {
+            paper.style.backgroundImage = 'linear-gradient(#e7e7e7 1px, transparent 1px)';
+            paper.style.backgroundSize = '100% ' + spacingInput.value + 'px';
+            const styleElement = document.getElementById('hide-red-line');
+            if(styleElement) styleElement.remove();
+        }
+    });
+
+    // Image Generation and Download
     function downloadHandwriting() {
-        const paperElement = document.getElementById('paper');
-        html2canvas(paperElement, { scale: 2 }).then(canvas => {
+        html2canvas(paper, { scale: 2 }).then(canvas => {
             let link = document.createElement('a');
-            link.download = 'handwriting_assignment.png';
+            link.download = 'handwriting_output.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
