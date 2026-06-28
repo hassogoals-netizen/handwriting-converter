@@ -13,8 +13,8 @@
     <!-- Chrome Tab Pic (Favicon) -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/fountain-pen.png">
 
-    <!-- Premium & Aesthetic Handwriting Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@500&family=Shadows+Into+Light&family=Architects+Daughter&family=Indie+Flower&family=Patrick+Hand&family=Permanent+Marker&family=Satisfy&family=Marck+Script&family=Great+Vibes&family=Bad+Script&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- Premium & Aesthetic Handwriting Fonts (20 Styles Total) -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script:wght@500&family=Shadows+Into+Light&family=Architects+Daughter&family=Indie+Flower&family=Patrick+Hand&family=Permanent+Marker&family=Satisfy&family=Marck+Script&family=Great+Vibes&family=Bad+Script&family=Sacramento&family=Kalam:wght@400;700&family=Amatic+SC:wght@700&family=Gloria+Hallelujah&family=Handlee&family=Reenie+Beanie&family=Just+Another+Hand&family=Nothing+You+Could+Do&family=Homemade+Apple&display=swap" rel="stylesheet">
     
     <!-- html2canvas library for downloading image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -77,7 +77,7 @@
             background-size: 100% 24px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             border: 1px solid #ddd;
-            padding: 34px 25px 40px 50px; /* Perfect top baseline fix */
+            padding: 31px 25px 40px 50px;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
@@ -95,13 +95,16 @@
             height: 100%;
             font-family: 'Caveat', cursive;
             font-size: 22px;
-            line-height: 24px; /* Matches background size scale */
+            line-height: 24px;
             color: #0033aa;
             white-space: pre-wrap;
             word-wrap: break-word;
             outline: none;
             text-align: left;
-            padding-top: 2px; /* Fine-tuned alignment */
+            
+            /* Text Baseline Fix */
+            display: inline-block;
+            margin-top: -4px;
         }
         
         /* Yellow Download Button */
@@ -169,6 +172,7 @@
             <div class="option-group">
                 <label>Handwriting Style</label>
                 <select id="font-select">
+                    <!-- Original 12 Fonts -->
                     <option value="'Caveat', cursive">Style 1 (Natural Cursive)</option>
                     <option value="'Dancing Script', cursive">Style 2 (Elegant Script)</option>
                     <option value="'Shadows Into Light', cursive">Style 3 (Neat & Clean)</option>
@@ -181,6 +185,15 @@
                     <option value="'Great Vibes', cursive">Style 10 (Royal Calligraphy)</option>
                     <option value="'Bad Script', cursive">Style 11 (Casual Teen)</option>
                     <option value="'Sacramento', cursive">Style 12 (Minimalist Thin)</option>
+                    <!-- 8 Brand New Premium Fonts -->
+                    <option value="'Kalam', cursive">Style 13 (Ballpoint Pen)</option>
+                    <option value="'Amatic SC', cursive">Style 14 (Tall Clean Capitals)</option>
+                    <option value="'Gloria Hallelujah', cursive">Style 15 (School Notebook)</option>
+                    <option value="'Handlee', cursive">Style 16 (Cozy Handwriting)</option>
+                    <option value="'Reenie Beanie', cursive">Style 17 (Loose Sketchy Ink)</option>
+                    <option value="'Just Another Hand', cursive">Style 18 (Slim & Quick)</option>
+                    <option value="'Nothing You Could Do', cursive">Style 19 (Artistic Freehand)</option>
+                    <option value="'Homemade Apple', cursive">Style 20 (Classic Script)</option>
                 </select>
             </div>
             <div class="option-group">
@@ -229,7 +242,7 @@
     <p>There are many ways to write content on the web for all kinds of purposes. Today we are going to be talking about a unique approach called <strong>Best Text to Handwriting Converter</strong>. This is a website tool that takes your text and turns it into a document that looks handwritten.</p>
 
     <h3>How to use the Best Text to Handwriting Converter tool</h3>
-    <p>This is something that you can use completely free of charge by visiting the website. Once you are on the page, you can enter text for the heading and text for the content or page line. You can choose between 12 different types of handwriting.</p>
+    <p>This is something that you can use completely free of charge by visiting the website. Once you are on the page, you can enter text for the heading and text for the content or page line. You can choose between 20 different types of handwriting.</p>
 </div>
 
 <!-- Footer -->
@@ -254,10 +267,14 @@
     const spacingInput = document.getElementById('spacing-input');
     const blankToggle = document.getElementById('blank-page-toggle');
 
-    // Perfect live sync with line shifts fixed
+    // Syncing background lines with custom typography height
     function syncLineHeight() {
         const spacing = parseInt(spacingInput.value);
         output.style.lineHeight = spacing + 'px';
+        
+        // Keeps font strictly aligned on top of lines during sizing shifts
+        output.style.marginTop = (4 - (spacing / 6)) + 'px'; 
+
         if(!blankToggle.checked) {
             paper.style.backgroundSize = '100% ' + spacing + 'px';
         }
